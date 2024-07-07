@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "stdarg.h": "c",
-        "stdint.h": "c",
-        "mmemorymgr.h": "c"
-    }
-}
