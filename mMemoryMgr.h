@@ -25,6 +25,11 @@ extern "C" {
 void mMemoryMgrInit(size_t memoryPoolSize, size_t spiltParts, size_t partsMode);
 
 /**
+ * @brief mMemoryMgr Deinit
+ */
+void mMemoryDeinit(void);
+
+/**
  * @brief alloc a space from memory pool
  * @param size alloc size
  * @retval pointer to space, could be NULL
