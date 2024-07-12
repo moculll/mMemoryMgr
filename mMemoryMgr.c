@@ -336,7 +336,7 @@ void *mMemoryMalloc(size_t size)
 
 void *mMemoryMallocFrom(size_t size, uint8_t partNum)
 {
-    mMemoryPart_t *part = NULL, partTmp = NULL, nextTmp = NULL;
+    mMemoryPart_t *part = NULL, *partTmp = NULL, *nextTmp = NULL;
     void *ret = NULL;
     uint8_t index = 0;
     for(part = mMemoryMgr->parts, index = 0; part != NULL; part = part->next, index++){
