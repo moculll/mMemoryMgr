@@ -2,20 +2,27 @@
 ## 1. Memory Map
 | mMemoryMgr | part0->part1->NULL |
 | ---------- | ---------- |
-| **part0(mode: 0)** | **part1(mode: 1)** |
-| namespace(1byte) | header(mMemoryNs_t) |
-| namespace(2byte) | namespace(7byte) |
-| namespace(3byte) | align size(1byte) |
-| namespace(4byte) | header(mMemoryNs_t) |
-| namespace(5byte) | namespace(12byte) |
-| namespace(6byte) | align size(4byte) |
-| 3byte reserved for align | header(mMemoryNs_t) |
-| header(mMemoryNs_t)(6byte) | namespace(17byte) |
-| header(mMemoryNs_t)(5byte) | align size(7byte) |
-| header(mMemoryNs_t)(4byte) | header(mMemoryNs_t) |
-| header(mMemoryNs_t)(3byte) | namespace(61byte) |
-| header(mMemoryNs_t)(2byte) | align size(3byte) |
-| header(mMemoryNs_t)(1byte) | **unused space** |
+| **part0(mode: 1)** | **part1(mode: 0)** |
+| ns0(1byte) | header(mMemoryNs_t)(ns0) |
+| ns1(2byte) | ns0(7byte) |
+| ns2(3byte) | align size(1byte) |
+| ns3(4byte) | header(mMemoryNs_t)(ns1) |
+| ns4(5byte) | ns1(12byte) |
+| ns5(6byte) | align size(4byte) |
+| 3byte reserved for align | header(mMemoryNs_t)(ns2) |
+| header(mMemoryNs_t)(ns5) | ns2(17byte) |
+| header(mMemoryNs_t)(ns4) | align size(7byte) |
+| header(mMemoryNs_t)(ns3) | header(mMemoryNs_t)(ns3) |
+| header(mMemoryNs_t)(ns2) | ns3(61byte) |
+| header(mMemoryNs_t)(ns1) | align size(3byte) |
+| header(mMemoryNs_t)(ns0) | **unused space** |
+
+```
+mode could be 0/1
+
+[0]: aligned mode
+[1]: reversed mode
+```
 
 ## 2. clone repo and Compile example
 ```

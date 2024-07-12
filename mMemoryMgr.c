@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
-
+#include <stdarg.h>
 /**
  * @brief mMgr use partInfo lower 2 bits to store <mode> and <occupy>
  * @param mode the second bit of partInfo
@@ -207,10 +207,12 @@ void mMemoryMgrInit(size_t memoryPoolSize, size_t spiltParts, size_t partsMode)
 
 }
 
+
 void *mMemoryMalloc(size_t size)
 {
     if(!size)
         return NULL;
+
     mMemoryPart_t *curPart;
     mMemoryNs_t *namespace;
     void *ret;
@@ -331,6 +333,27 @@ void *mMemoryMalloc(size_t size)
 
     return NULL;
 }
+
+void *mMemoryMallocFrom(size_t size, uint8_t partNum)
+{
+    mMemoryPart_t *part = NULL, partTmp = NULL, nextTmp = NULL;
+    void *ret = NULL;
+    uint8_t index = 0;
+    for(part = mMemoryMgr->parts, index = 0; part != NULL; part = part->next, index++){
+        if(index == partNum){
+            partTmp = mMemoryMgr->parts;
+            mMemoryMgr->parts = part;
+            nextTmp = part->next;
+            part->next = NULL;
+            ret = mMemoryMalloc(size);
+            part->next = nextTmp;
+            mMemoryMgr->parts = partTmp;
+            return ret;
+        }
+    }
+    return ret;
+}
+
 
 void mMemoryFree(void *free)
 {
