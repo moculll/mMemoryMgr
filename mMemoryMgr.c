@@ -374,3 +374,22 @@ void mMemoryFree(void *free)
     }
 
 }
+
+void mMemoryDeinit(void)
+{
+    if(!mMemoryMgr)
+        return;
+    mMemoryPart_t *curPart = mMemoryMgr->parts, *nextPart = NULL;
+
+    while(curPart){
+        nextPart = curPart->next;
+        memset(curPart->addr, 0, curPart->space);
+        free(curPart->addr);
+        memset(curPart, 0, sizeof(mMemoryPart_t));
+        free((void *)curPart);
+        curPart = nextPart;
+    }
+    memset((void *)mMemoryMgr, 0, sizeof(mMemoryMgr_t));
+    free((void *)mMemoryMgr);
+    mMemoryMgr = NULL;
+}
