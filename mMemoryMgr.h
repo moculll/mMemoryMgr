@@ -12,7 +12,16 @@
 extern "C" {
 #endif
 
-#define MMGR_INIT_PARTS_MODE_BIT(part, partIndex, mode) ((part) |= (part) & ~(partIndex) | ((mode) << (partIndex)))
+#define MMGR_INIT_PARTS_MODE_BIT(part, partIndex, mode) ((part) |= (part) & ~(partIndex) | ((mode) << (partIndex * 2)))
+
+
+typedef enum {
+
+    MMGR_MODE_ALIGN = 0,
+    MMGR_MODE_REVERSE,
+    MMGR_MODE_LIST,
+
+} mMemoryMode_e;
 
 /**
  * @brief mMemoryMgr Init
