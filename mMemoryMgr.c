@@ -4,8 +4,8 @@
  * @copyright 2024, mocul, Apache-2.0
  */
 
-#include <mMemoryMgr.h>
-#include <rbtree.h>
+#include <mMemoryMgr/mMemoryMgr.h>
+#include <rbtree/rbtree.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -300,8 +300,8 @@ void *mMemoryMalloc(size_t size)
         /* aligned mode */
 
         switch(MMGR_GET_PART_MODE(curPart)){
-
-            case MMGR_MODE_ALIGN:
+            
+            case MMGR_MODE_ALIGN: {
                 uint8_t alignOffset = (sizeof(long) - size) > 0 ? sizeof(long) - size : sizeof(long) - (size % sizeof(long));
                 if(curPart->leftSpace < sizeof(mMemoryNs_t) + size + alignOffset){
                     MMGR_SET_PART_OCCUPY(curPart, 0);
@@ -325,7 +325,7 @@ void *mMemoryMalloc(size_t size)
                 curPart->leftSpace -= sizeof(mMemoryNs_t) + size + alignOffset;
                 MMGR_SET_PART_OCCUPY(curPart, 0);
             return newNs->addr;
-            
+            }
 
             case MMGR_MODE_REVERSE:
                 /* reverse mode */
